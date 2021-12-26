@@ -38,13 +38,9 @@ export default {
           if (res.status >= 200 && res.status < 300) {
             this.message = "Success";
           }
-        })
-        .catch(function (res) {
-          console.log(res);
-        })
-        .finally((k) => console.log(k));
+        });
     },
-    getUsersListFromAPI() {
+    async getUsersListFromAPI() {
       return fetch("http://localhost:9999/users", {
         headers: { "Content-Type": "application/json" },
       })
