@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev": "concurrently --kill-others \"npm run serve ./frontend/src/main.js\" \"node ./backend/controller/index.js\"",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "concurrently": "^7.0.0",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11",
-    "express": "4.17.2"
+    "express": "4.17.2",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

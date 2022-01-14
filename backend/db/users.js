@@ -3,6 +3,10 @@ const users = [
     login: "user",
     password: "pass",
   },
+  {
+    login: "jack",
+    password: "black",
+  },
 ];
 
 function getUserLoginAndPassword(login, pass) {

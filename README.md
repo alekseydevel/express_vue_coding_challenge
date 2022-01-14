@@ -4,6 +4,5 @@
 
 ToDo:
 - [ ] tests
-- [ ] docker-compose
 - [ ] entry point files (server)
 - [ ] BE controllers refactoring

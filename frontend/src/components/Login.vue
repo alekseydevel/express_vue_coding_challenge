@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { login, getUsers } from '../store/user.js'; // todo: configure alias
+
 export default {
   name: "Login",
   data() {
@@ -22,29 +24,13 @@ export default {
     };
   },
   methods: {
-    auth() {
-      fetch("http://localhost:9999/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ login: this.login, password: this.password }),
-      })
-        .then((res) => {
-          if (res.status >= 400 && res.status < 500) {
-            this.message = "Could not login. Please, check your creds";
-          }
-          if (res.status >= 500) {
-            this.message = "Server issue.";
-          }
-          if (res.status >= 200 && res.status < 300) {
-            this.message = "Success";
-          }
-        });
+    async auth() {
+      await login(this.login, this.password).then((res) => {
+        this.message = this.getMessageByStatusCode(res.status);
+      });
     },
     async getUsersListFromAPI() {
-      return fetch("http://localhost:9999/users", {
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((res) => res.json())
+      return getUsers()
         .then((res) => {
           const transform = function (u) {
             u.email = u.login;
@@ -55,6 +41,19 @@ export default {
           this.usersList = res.map((u) => transform(u));
         });
     },
+    getMessageByStatusCode(code) {
+      if (code >= 400 && code < 500) {
+        return "Could not login. Please, check your creds";
+      }
+      if (code >= 500) {
+        return "Server issue.";
+      }
+      if (code >= 200 && code < 300) {
+        return "Success";
+      }
+
+      return "No idea ;)"
+    }
   },
   created() {
     this.getUsersListFromAPI();
